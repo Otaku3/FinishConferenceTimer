@@ -27,12 +27,13 @@ class ConferenceViewController: UIViewController, UITableViewDataSource {
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @IBOutlet var conferenceName: UILabel!
+    @IBOutlet var ConferenceName: UILabel!
+    var NamefromVC = ""
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        conferenceName.text = conferenceName
+         ConferenceName.text = NamefromVC
 
         // Do any additional setup after loading the view.
     }
