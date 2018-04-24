@@ -9,11 +9,19 @@
 import UIKit
 
 class AddViewController: UIViewController {
+    
+    @IBOutlet var NameTextField: UITextField!
+    @IBOutlet var TimePickerView: UIPickerView!
+    
+    var AgendaList: [Dictionary<String, Int>] = []
+    let saveData = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func saveAgenda(){
+        
     }
 
     override func didReceiveMemoryWarning() {

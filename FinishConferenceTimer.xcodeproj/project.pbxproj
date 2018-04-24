@@ -17,6 +17,8 @@
 		66ED6CB9208EF2D60021EF8C /* ConferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6CB8208EF2D60021EF8C /* ConferenceViewController.swift */; };
 		66ED6CBB208EF2E80021EF8C /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6CBA208EF2E80021EF8C /* AddViewController.swift */; };
 		66ED6CBD208EF2F60021EF8C /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6CBC208EF2F60021EF8C /* TimerViewController.swift */; };
+		66ED6E46208F36320021EF8C /* AgendaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6E44208F36320021EF8C /* AgendaTableViewCell.swift */; };
+		66ED6E47208F36320021EF8C /* AgendaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66ED6E45208F36320021EF8C /* AgendaTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		66ED6CB8208EF2D60021EF8C /* ConferenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceViewController.swift; sourceTree = "<group>"; };
 		66ED6CBA208EF2E80021EF8C /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		66ED6CBC208EF2F60021EF8C /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
+		66ED6E44208F36320021EF8C /* AgendaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaTableViewCell.swift; sourceTree = "<group>"; };
+		66ED6E45208F36320021EF8C /* AgendaTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AgendaTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				66ED6C8A208EEA4A0021EF8C /* AppDelegate.swift */,
 				66ED6C8C208EEA4A0021EF8C /* ViewController.swift */,
 				66ED6CB8208EF2D60021EF8C /* ConferenceViewController.swift */,
+				66ED6E44208F36320021EF8C /* AgendaTableViewCell.swift */,
+				66ED6E45208F36320021EF8C /* AgendaTableViewCell.xib */,
 				66ED6CBA208EF2E80021EF8C /* AddViewController.swift */,
 				66ED6CBC208EF2F60021EF8C /* TimerViewController.swift */,
 				66ED6C8E208EEA4A0021EF8C /* Main.storyboard */,
@@ -241,6 +247,7 @@
 				66ED6C95208EEA4C0021EF8C /* LaunchScreen.storyboard in Resources */,
 				66ED6C92208EEA4C0021EF8C /* Assets.xcassets in Resources */,
 				66ED6C90208EEA4A0021EF8C /* Main.storyboard in Resources */,
+				66ED6E47208F36320021EF8C /* AgendaTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66ED6CBD208EF2F60021EF8C /* TimerViewController.swift in Sources */,
+				66ED6E46208F36320021EF8C /* AgendaTableViewCell.swift in Sources */,
 				66ED6C8D208EEA4A0021EF8C /* ViewController.swift in Sources */,
 				66ED6C8B208EEA4A0021EF8C /* AppDelegate.swift in Sources */,
 				66ED6CBB208EF2E80021EF8C /* AddViewController.swift in Sources */,

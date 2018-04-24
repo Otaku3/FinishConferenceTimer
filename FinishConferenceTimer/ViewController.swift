@@ -81,7 +81,11 @@ class ViewController: UIViewController {
         if segue.identifier == "toConferenceView" {
             let ConferenceVC = segue.destination as! ConferenceViewController
             ConferenceVC.NamefromVC = ConferenceName.text!
+            ConferenceName.text = ""
         }
+    }
+    
+    @IBAction func back (segue: UIStoryboardSegue){
     }
 
     
