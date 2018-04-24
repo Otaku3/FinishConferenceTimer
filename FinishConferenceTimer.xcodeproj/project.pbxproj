@@ -14,6 +14,9 @@
 		66ED6C95208EEA4C0021EF8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ED6C93208EEA4C0021EF8C /* LaunchScreen.storyboard */; };
 		66ED6CA0208EEA4C0021EF8C /* FinishConferenceTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6C9F208EEA4C0021EF8C /* FinishConferenceTimerTests.swift */; };
 		66ED6CAB208EEA4C0021EF8C /* FinishConferenceTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6CAA208EEA4C0021EF8C /* FinishConferenceTimerUITests.swift */; };
+		66ED6CB9208EF2D60021EF8C /* ConferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6CB8208EF2D60021EF8C /* ConferenceViewController.swift */; };
+		66ED6CBB208EF2E80021EF8C /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6CBA208EF2E80021EF8C /* AddViewController.swift */; };
+		66ED6CBD208EF2F60021EF8C /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6CBC208EF2F60021EF8C /* TimerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		66ED6CA6208EEA4C0021EF8C /* FinishConferenceTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinishConferenceTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66ED6CAA208EEA4C0021EF8C /* FinishConferenceTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishConferenceTimerUITests.swift; sourceTree = "<group>"; };
 		66ED6CAC208EEA4C0021EF8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66ED6CB8208EF2D60021EF8C /* ConferenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceViewController.swift; sourceTree = "<group>"; };
+		66ED6CBA208EF2E80021EF8C /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		66ED6CBC208EF2F60021EF8C /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,9 @@
 			children = (
 				66ED6C8A208EEA4A0021EF8C /* AppDelegate.swift */,
 				66ED6C8C208EEA4A0021EF8C /* ViewController.swift */,
+				66ED6CB8208EF2D60021EF8C /* ConferenceViewController.swift */,
+				66ED6CBA208EF2E80021EF8C /* AddViewController.swift */,
+				66ED6CBC208EF2F60021EF8C /* TimerViewController.swift */,
 				66ED6C8E208EEA4A0021EF8C /* Main.storyboard */,
 				66ED6C91208EEA4C0021EF8C /* Assets.xcassets */,
 				66ED6C93208EEA4C0021EF8C /* LaunchScreen.storyboard */,
@@ -256,8 +265,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66ED6CBD208EF2F60021EF8C /* TimerViewController.swift in Sources */,
 				66ED6C8D208EEA4A0021EF8C /* ViewController.swift in Sources */,
 				66ED6C8B208EEA4A0021EF8C /* AppDelegate.swift in Sources */,
+				66ED6CBB208EF2E80021EF8C /* AddViewController.swift in Sources */,
+				66ED6CB9208EF2D60021EF8C /* ConferenceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
