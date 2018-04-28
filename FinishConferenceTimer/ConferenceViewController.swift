@@ -12,7 +12,7 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     
     
     /////////////////////////////////////変数宣言////////////////////////////////////////////////
-    //議題データ
+    //議題データ（とりあえずローカルに持たせとく）
     var AgendaNameList: [String] = ["議題1", "議題2", "議題3"]    //議題名のString型配列
     var DiscussTimeList: [Int] = [20, 15, 30]   //議論時間のInt型配列
     //let saveData = UserDefaults.standard
@@ -49,7 +49,8 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         
         return cell
     }
-
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    
     //合計時間の計算メソッド
     func CalcTotalTime() -> Int{
         var TotalTime: Int = 0
@@ -58,6 +59,17 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         }
         return TotalTime
     }
+    
+    //必要な値をTimerViewに渡すメソッド
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if segue.identifier == "toTimerView" {
+            let TimerVC = segue.destination as! TimerViewController
+            TimerVC.ConferenceNamefrom = ConferenceName.text!
+        }
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

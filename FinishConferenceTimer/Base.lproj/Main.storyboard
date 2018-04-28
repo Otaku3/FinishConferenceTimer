@@ -107,7 +107,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tjo-YS-08r">
-                                <rect key="frame" x="16" y="190" width="343" height="465"/>
+                                <rect key="frame" x="16" y="190" width="343" height="361"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -142,6 +142,18 @@
                                     <outlet property="prefetchDataSource" destination="ovO-xt-TzY" id="bfd-3s-6Z9"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gih-Dt-Ce8">
+                                <rect key="frame" x="16" y="570" width="341" height="77"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="スタート">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="W5Q-5f-AeL" kind="presentation" identifier="toTimerView" id="lwX-CS-Rwu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="kMX-hs-DrU"/>
@@ -207,7 +219,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DAw-67-Uas" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1709.5999999999999" y="31.934032983508249"/>
+            <point key="canvasLocation" x="913" y="761"/>
         </scene>
         <!--Timer View Controller-->
         <scene sceneID="aT2-X6-O0Q">
@@ -228,8 +240,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="○○" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DU-el-3oT">
-                                        <rect key="frame" x="139" y="54" width="65" height="47"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="○○" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6DU-el-3oT">
+                                        <rect key="frame" x="0.0" y="46" width="290" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="39"/>
                                         <nil key="textColor"/>
@@ -296,14 +308,27 @@
                                 <color key="backgroundColor" red="0.92723041772842407" green="0.90500634908676147" blue="0.036613930016756058" alpha="0.45448951199999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cyr-Gi-Gr6">
+                                <rect key="frame" x="16" y="554" width="105" height="93"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="iXk-is-6Os"/>
                     </view>
+                    <connections>
+                        <outlet property="AgendaTimerLabel" destination="7wY-67-2F2" id="Fzo-cG-fkj"/>
+                        <outlet property="ConferenceNameLabel" destination="PkF-fE-X8h" id="qDn-of-j1X"/>
+                        <outlet property="ConferenceTimerLabel" destination="IPU-50-gd1" id="ChJ-Ar-Ssj"/>
+                        <outlet property="CurrentAgendaNameLabel" destination="6DU-el-3oT" id="RXd-oW-tOr"/>
+                        <outlet property="NextAgendaNameLabel" destination="Js3-CD-fqt" id="rhp-Wv-APN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CG7-eL-nZB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2431.1999999999998" y="31.934032983508249"/>
+            <point key="canvasLocation" x="1893.5999999999999" y="33.733133433283363"/>
         </scene>
     </scenes>
 </document>
