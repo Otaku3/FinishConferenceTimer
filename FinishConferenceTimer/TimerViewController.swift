@@ -23,10 +23,10 @@ class TimerViewController: UIViewController {
     var AgendaNameList: [String] = ["議題1", "議題2", "議題3"]    //議題名のString型配列
     var DiscussTimeList: [Int] = [1, 1, 1]   //議論時間のInt型配列(分)
     
+    
     var ConferenceNamefrom:String = ""  //ConferenceViewから会議名を受け取る変数
     
     var timer = Timer()    //Timerクラスのインスタンス
-//    var startTime:Double = 0.0  //スタート時刻を保存
     
     //会議合計時間(分)の計算メソッド
     func CalcTotalTimeofMin() -> Int{
@@ -53,8 +53,6 @@ class TimerViewController: UIViewController {
         let startTime = NSDate()
         //終了時刻を計算
         let finishTimeC = NSDate(timeInterval: TimeInterval(CalcTotalTimeofSec()), since: startTime as Date)
-//        //残り時間のラベルを更新セット
-//        ConferenceTimerLabel.text = String(CalcTotalTimeofMin())
         //0.01秒ごとにupdatelabel()を呼び出す      //finishTimeを引数でupdatelabelに渡したいけど直接じゃ無理ぽいのでuserinfo経由
         timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateClabel), userInfo: finishTimeC, repeats: true)
     }
@@ -89,12 +87,12 @@ class TimerViewController: UIViewController {
             let startTime = NSDate()
             //終了時刻を計算
             let finishTimeA = NSDate(timeInterval: TimeInterval(DiscussTimeList[i]*60), since: startTime as Date)
-    //        //残り時間のラベルを更新セット
-    //        AgendaTimerLabel.text = String()
+    
             while true {    //議論時間終わるまで無限ループ
                 //0.01秒ごとにupdateAlabel()を呼び出す
                 timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateAlabel), userInfo: finishTimeA, repeats: true)
-                
+                //終わったら抜ける
+                //if updateAlabel(finishTimeA) == 0 scheduledtimerで渡す処理のところでTimerにしたから型が合わない
                 if AgendaTimerLabel.text == "00:00"{break}
             }
         }
