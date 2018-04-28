@@ -83,23 +83,25 @@ class TimerViewController: UIViewController {
         for i in 0..<AgendaNameList.count {
             //議題名ラベルをセット
             CurrentAgendaNameLabel.text = AgendaNameList[i]
+            if(i == AgendaNameList.count - 1){
+                NextAgendaNameLabel.text = "会議終了です"
+                
+            }else{
+                NextAgendaNameLabel.text = AgendaNameList[i + 1]
+            }
             //開始時刻を記録
             let startTime = NSDate()
             //終了時刻を計算
             let finishTimeA = NSDate(timeInterval: TimeInterval(DiscussTimeList[i]*60), since: startTime as Date)
-    
-            while true {    //議論時間終わるまで無限ループ
-                //0.01秒ごとにupdateAlabel()を呼び出す
-                timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateAlabel), userInfo: finishTimeA, repeats: true)
-                //終わったら抜ける
-                //if updateAlabel(finishTimeA) == 0 scheduledtimerで渡す処理のところでTimerにしたから型が合わない
-                if AgendaTimerLabel.text == "00:00"{break}
-            }
+//            repeat{
+            //0.01秒ごとにupdateAlabel()を呼び出す
+            timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateAlabel), userInfo: finishTimeA, repeats: true)
+//            }while(timer.isValid == true)
         }
     }
     
-    //議題タイマーの表示を更新させるメソッド(継続なら0，終了なら1を返す)
-    @objc func updateAlabel(_ finishTimeA: Timer) -> Int {
+    //議題タイマーの表示を更新させるメソッド
+    @objc func updateAlabel(_ finishTimeA: Timer) -> Void {
         let FinishTime: NSDate = finishTimeA.userInfo as! NSDate //すごい無理やり処理してる感ある
         //残り時間を終了時刻ー現在時刻で取得(秒)
         let leftTime = Int(FinishTime.timeIntervalSinceNow)
@@ -114,10 +116,7 @@ class TimerViewController: UIViewController {
         if leftTime == 0 {
             let soundIDRing: SystemSoundID = 1000
             AudioServicesPlaySystemSound(soundIDRing)
-            return 1
-        }
-        else{
-            return 0
+            timer.invalidate()
         }
     }
 
