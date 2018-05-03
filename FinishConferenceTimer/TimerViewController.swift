@@ -20,8 +20,9 @@ class TimerViewController: UIViewController {
     
     
     //とりあえずローカルに持たせとく
-    var AgendaNameList: [String] = ["議題1", "議題2", "議題3"]    //議題名のString型配列
-    var DiscussTimeList: [Int] = [60, 60, 60]   //議論時間のInt型配列(秒)
+    let saveData = UserDefaults.standard
+    var AgendaNameList: [String] = []// ["議題1", "議題2", "議題3"]    //議題名のString型配列
+    var DiscussTimeList: [Int] = []//[1, 1, 1]   //議論時間のInt型配列(分)
     
     
     var ConferenceNamefrom:String = ""  //ConferenceViewから会議名を受け取る変数
@@ -37,7 +38,7 @@ class TimerViewController: UIViewController {
         for i in DiscussTimeList{
             TotalTime += i
         }
-        return TotalTime
+        return TotalTime * 60
     }
     
     //////////////////////////////////////////会議時間タイマー///////////////////////////////////////////////
@@ -83,7 +84,7 @@ class TimerViewController: UIViewController {
         //開始時刻を記録
         let startTime = Date()
         //終了時刻を計算
-        let finishDateA: Date = Date(timeInterval: TimeInterval(DiscussTimeList[currentDiscuss]), since: startTime as Date)
+        let finishDateA: Date = Date(timeInterval: TimeInterval(DiscussTimeList[currentDiscuss] * 60), since: startTime as Date)
         
 //        //終了までの時間をセット
 //        finishTime = DiscussTimeList[currentDiscuss] //秒で保持
@@ -95,7 +96,6 @@ class TimerViewController: UIViewController {
         }else{
             NextAgendaNameLabel.text = AgendaNameList[currentDiscuss + 1]
         }
-        
         
         //countTimerを呼び出す
         AgendaTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(countTimer), userInfo: finishDateA, repeats: true)
@@ -116,10 +116,8 @@ class TimerViewController: UIViewController {
         let displayString = NSString(format: "%02d:%02d", leftMin, leftSec)
         AgendaTimerLabel.text = displayString as String
         
-        
 //        //今のタイマー終了までの時間を更新
 //        finishTime = finishTime - 1
-//
         
         if leftTime == 0 && currentDiscuss == AgendaNameList.count - 1{  //最終終了処理
             AgendaTimer.invalidate()
@@ -133,22 +131,19 @@ class TimerViewController: UIViewController {
             AgendaTimer.invalidate()
             RepeatTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(AgendaTimerStart), userInfo: nil, repeats: false)
         }
-        
-        
-        
-//        //表示ラベルを更新//残り時間はfinishTime(秒)
-//        //表示形式に加工
-//        let minSec: Int = 60    //変換単位(分→秒)
-//        let leftMin = finishTime / minSec
-//        let leftSec = finishTime - leftMin * minSec
-//        let displayString = NSString(format: "%02d:%02d", leftMin, leftSec)
-//        AgendaTimerLabel.text = displayString as String
-
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Userdefaultからの読み込み
+        if saveData.array(forKey: "AGENDA") != nil{
+            AgendaNameList = saveData.array(forKey: "AGENDA") as! [String]
+        }
+        if saveData.array(forKey: "TIME") != nil{
+            DiscussTimeList = saveData.array(forKey: "TIME") as! [Int]
+        }
+        
         ConferenceNameLabel.text = ConferenceNamefrom   //ConferenceViewから受け取った会議名をラベルに代入
         ConferenceTimerStart()
         AgendaTimerStart()

@@ -12,15 +12,16 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     
     
     /////////////////////////////////////変数宣言////////////////////////////////////////////////
-    //議題データ（とりあえずローカルに持たせとく）
-    var AgendaNameList: [String] = ["議題1", "議題2", "議題3"]    //議題名のString型配列
-    var DiscussTimeList: [Int] = [20, 15, 30]   //議論時間のInt型配列
-    //let saveData = UserDefaults.standard
+    //議題データ
+    var AgendaNameList: [String] = []   //議題名のString型配列
+    var DiscussTimeList: [Int] = []     //議論時間のInt型配列
+    let saveData = UserDefaults.standard
     
     @IBOutlet var ConferenceName: UILabel!  //会議名のラベル
     var NamefromVC = "" //VCからの会議名受け渡し用の変数
     @IBOutlet var ConferenceTime: UILabel!  //会議の合計時間表示のラベル
 
+    
     /////////////////////////////////////TableViewの設定/////////////////////////////////////////
     //セクション数決定
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -34,11 +35,6 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     
     //表示の設定
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AgendaTableViewCell
-//        cell.AgendaNameLabel.text = AgendaNameList[indexPath.row]
-//        cell.DiscussTimeLabel.text = String(DiscussTimeList[indexPath.row])
-//        カスタムセル使おうとした残骸
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)  //UITableViewCellのインスタンス生成
         
         let agendaname = cell.viewWithTag(1) as! UILabel
@@ -51,13 +47,16 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
     
-    //合計時間の計算メソッド
-    func CalcTotalTime() -> Int{
+    //表示用の合計時間の計算メソッド
+    func CalcTotalTime() -> (hour: Int, minute: Int) {
         var TotalTime: Int = 0
         for i in DiscussTimeList{
             TotalTime += i
         }
-        return TotalTime
+        let hour: Int = TotalTime / 60
+        let minute: Int = TotalTime - hour * 60
+        
+        return (hour, minute)
     }
     
     //必要な値をTimerViewに渡すメソッド
@@ -68,30 +67,39 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    
+    //スタートボタンタップ時の動作
+    @IBAction func tappedStartButton(){
+        if AgendaNameList.count == 0 || DiscussTimeList.count == 0{
+            let alert: UIAlertController = UIAlertController(title: "議題", message: "＋ボタンから会議内容を追加してください", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            self.performSegue(withIdentifier: "toTimerView", sender: nil)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //ViewControllerから渡された会議名を代入
-        ConferenceName.text = NamefromVC
-        //合計時間を計算して代入
-        ConferenceTime.text = String(CalcTotalTime())
-        
-        
-        //xibを読み込み
-//        let view: UIView = UINib(nibName: "AgendaTableViewCell", bundle: nil).instantiate(withOwner: self, options: nil)[0] as! UIView
-//        self.view.addSubview(view)
-//        tableView.delegate = self
-//        tableView.datasource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-//        if saveData.array(forKey: "AGENDA") != nil {
-//            AgendaList = saveData.array(forKey: "AGENDA") as! [Dictionary<String, Int>]
-//        }
-//        self.view.reloadInputViews()
+        //ViewControllerから渡された会議名を代入
+        ConferenceName.text = NamefromVC
+        //Userdefaultからの読み込み
+        if saveData.array(forKey: "AGENDA") != nil{
+            AgendaNameList = saveData.array(forKey: "AGENDA") as! [String]
+        }
+        if saveData.array(forKey: "TIME") != nil{
+            DiscussTimeList = saveData.array(forKey: "TIME") as! [Int]
+        }
+        //合計時間をラベルに表示
+        if CalcTotalTime().hour == 0{
+            ConferenceTime.text = "合計" + String(CalcTotalTime().minute) + "分"
+        }else{
+            ConferenceTime.text = "合計" + String(CalcTotalTime().hour) + "時間" + String(CalcTotalTime().minute) + "分"
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
