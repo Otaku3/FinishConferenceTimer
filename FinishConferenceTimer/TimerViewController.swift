@@ -21,21 +21,15 @@ class TimerViewController: UIViewController {
     
     //とりあえずローカルに持たせとく
     var AgendaNameList: [String] = ["議題1", "議題2", "議題3"]    //議題名のString型配列
-    var DiscussTimeList: [Int] = [1, 1, 1]   //議論時間のInt型配列(分)
+    var DiscussTimeList: [Int] = [60, 60, 60]   //議論時間のInt型配列(秒)
     
     
     var ConferenceNamefrom:String = ""  //ConferenceViewから会議名を受け取る変数
     
-    var timer = Timer()    //Timerクラスのインスタンス
+    var Conferencetimer = Timer()
+    var AgendaTimer = Timer()
+    var RepeatTimer = Timer()
     
-    //会議合計時間(分)の計算メソッド
-    func CalcTotalTimeofMin() -> Int{
-        var TotalTime: Int = 0
-        for i in DiscussTimeList{
-            TotalTime += i
-        }
-        return TotalTime
-    }
     
     //会議合計時間(秒)の計算メソッド
     func CalcTotalTimeofSec() -> Int{
@@ -43,25 +37,25 @@ class TimerViewController: UIViewController {
         for i in DiscussTimeList{
             TotalTime += i
         }
-        return TotalTime*60
+        return TotalTime
     }
     
     //////////////////////////////////////////会議時間タイマー///////////////////////////////////////////////
     //画面遷移後に会議タイマーをスタートさせるメソッド
     func ConferenceTimerStart(){
         //開始時刻を記録
-        let startTime = NSDate()
+        let startTime = Date()
         //終了時刻を計算
-        let finishTimeC = NSDate(timeInterval: TimeInterval(CalcTotalTimeofSec()), since: startTime as Date)
+        let finishDateC = Date(timeInterval: TimeInterval(CalcTotalTimeofSec()), since: startTime as Date)
         //0.01秒ごとにupdatelabel()を呼び出す      //finishTimeを引数でupdatelabelに渡したいけど直接じゃ無理ぽいのでuserinfo経由
-        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateClabel), userInfo: finishTimeC, repeats: true)
+        Conferencetimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateClabel), userInfo: finishDateC, repeats: true)
     }
     
     //会議タイマーの表示を更新させるメソッド
-    @objc func updateClabel(_ finishTimeC: Timer) {
-        let FinishTime: NSDate = finishTimeC.userInfo as! NSDate //すごい無理やり処理してる感ある
+    @objc func updateClabel(_ finishDateC: Timer) {
+        let FinishDate: Date = finishDateC.userInfo as! Date //すごい無理やり処理してる感ある
         //残り時間を終了時刻ー現在時刻で取得(秒)
-        let leftTime = Int(FinishTime.timeIntervalSinceNow)
+        let leftTime = Int(FinishDate.timeIntervalSinceNow)
         //表示形式に加工
         let minSec = 60
         let leftMin = leftTime / minSec
@@ -73,60 +67,91 @@ class TimerViewController: UIViewController {
         if leftTime == 0 {
             let soundIDRing: SystemSoundID = 1005
             AudioServicesPlaySystemSound(soundIDRing)
+            Conferencetimer.invalidate()
         }
     }
 
     
     //////////////////////////////////////////議題時間タイマー//////////////////////////////////////////////
-    //画面遷移後に議題タイマーをスタートさせるメソッド
-    func AgendaTimerStart(){
-        for i in 0..<AgendaNameList.count {
-            //議題名ラベルをセット
-            CurrentAgendaNameLabel.text = AgendaNameList[i]
-            if(i == AgendaNameList.count - 1){
-                NextAgendaNameLabel.text = "会議終了です"
-                
-            }else{
-                NextAgendaNameLabel.text = AgendaNameList[i + 1]
-            }
-            //開始時刻を記録
-            let startTime = NSDate()
-            //終了時刻を計算
-            let finishTimeA = NSDate(timeInterval: TimeInterval(DiscussTimeList[i]*60), since: startTime as Date)
-//            repeat{
-            //0.01秒ごとにupdateAlabel()を呼び出す
-            timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateAlabel), userInfo: finishTimeA, repeats: true)
-//            }while(timer.isValid == true)
+//    var finishTime :Int = 0
+    var currentDiscuss :Int = 0
+    
+    
+    //画面遷移後にスタート
+    @objc func AgendaTimerStart() {
+        
+        //開始時刻を記録
+        let startTime = Date()
+        //終了時刻を計算
+        let finishDateA: Date = Date(timeInterval: TimeInterval(DiscussTimeList[currentDiscuss]), since: startTime as Date)
+        
+//        //終了までの時間をセット
+//        finishTime = DiscussTimeList[currentDiscuss] //秒で保持
+
+        //議題名ラベルをセット
+        CurrentAgendaNameLabel.text = AgendaNameList[currentDiscuss]
+        if(currentDiscuss == AgendaNameList.count - 1){
+            NextAgendaNameLabel.text = "会議終了です"
+        }else{
+            NextAgendaNameLabel.text = AgendaNameList[currentDiscuss + 1]
         }
+        
+        
+        //countTimerを呼び出す
+        AgendaTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(countTimer), userInfo: finishDateA, repeats: true)
+        
     }
     
-    //議題タイマーの表示を更新させるメソッド
-    @objc func updateAlabel(_ finishTimeA: Timer) -> Void {
-        let FinishTime: NSDate = finishTimeA.userInfo as! NSDate //すごい無理やり処理してる感ある
+    //タイマーを動かすメソッド
+    @objc func countTimer(_ finishDateA: Timer) {
+        
+        
+        let FinishDate: Date = finishDateA.userInfo as! Date //すごい無理やり処理してる感ある
         //残り時間を終了時刻ー現在時刻で取得(秒)
-        let leftTime = Int(FinishTime.timeIntervalSinceNow)
-        //表示形式に加工
+        let leftTime = Int(FinishDate.timeIntervalSinceNow)
+        //leftTimeを表示形式に加工
         let minSec = 60
         let leftMin = leftTime / minSec
         let leftSec = leftTime - leftMin * minSec
         let displayString = NSString(format: "%02d:%02d", leftMin, leftSec)
         AgendaTimerLabel.text = displayString as String
         
-        //終了処理
-        if leftTime == 0 {
-            let soundIDRing: SystemSoundID = 1000
+        
+//        //今のタイマー終了までの時間を更新
+//        finishTime = finishTime - 1
+//
+        
+        if leftTime == 0 && currentDiscuss == AgendaNameList.count - 1{  //最終終了処理
+            AgendaTimer.invalidate()
+            let soundIDRing: SystemSoundID = 1005
             AudioServicesPlaySystemSound(soundIDRing)
-            timer.invalidate()
         }
-    }
+        else if leftTime == 0 {    //終了したらcurrentDiscussを更新してstartTimerを起動し直す
+            currentDiscuss += 1
+            let soundIDRing: SystemSoundID = 1005
+            AudioServicesPlaySystemSound(soundIDRing)
+            AgendaTimer.invalidate()
+            RepeatTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(AgendaTimerStart), userInfo: nil, repeats: false)
+        }
+        
+        
+        
+//        //表示ラベルを更新//残り時間はfinishTime(秒)
+//        //表示形式に加工
+//        let minSec: Int = 60    //変換単位(分→秒)
+//        let leftMin = finishTime / minSec
+//        let leftSec = finishTime - leftMin * minSec
+//        let displayString = NSString(format: "%02d:%02d", leftMin, leftSec)
+//        AgendaTimerLabel.text = displayString as String
 
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ConferenceNameLabel.text = ConferenceNamefrom   //ConferenceViewから受け取った会議名をラベルに代入
         ConferenceTimerStart()
         AgendaTimerStart()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
