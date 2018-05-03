@@ -8,14 +8,27 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var ConferenceName: UITextField!
     
+    // 改行ボタンを押した時の処理
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを隠す
+        ConferenceName.resignFirstResponder()
+        return true
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        ConferenceName.placeholder = "○○会議"
-        ConferenceName.clearButtonMode = .always
+        ConferenceName.delegate = self
+        //TextFieldを改良
+        ConferenceName.textColor = UIColor.black                        //文字色
+        ConferenceName.backgroundColor = UIColor(white: 0.9, alpha: 1)   // 背景色
+        ConferenceName.placeholder = "○○会議"                        //プレースホルダー設定
+        ConferenceName.clearButtonMode = .always                    //全消去ボタン設定
+        ConferenceName.returnKeyType = .done                        //改行ボタン→完了ボタン
         
     }
     
