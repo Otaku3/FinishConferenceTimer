@@ -20,6 +20,8 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet var ConferenceName: UILabel!  //会議名のラベル
     var NamefromVC = "" //VCからの会議名受け渡し用の変数
     @IBOutlet var ConferenceTime: UILabel!  //会議の合計時間表示のラベル
+    
+    @IBOutlet var AgendaList: UITableView!
 
     
     /////////////////////////////////////TableViewの設定/////////////////////////////////////////
@@ -100,6 +102,8 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         }else{
             ConferenceTime.text = "合計" + String(CalcTotalTime().hour) + "時間" + String(CalcTotalTime().minute) + "分"
         }
+        //TableViewをリロード
+        AgendaList.reloadData()
         
     }
 
@@ -107,6 +111,16 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //unwind Segue
+    @IBAction func backConferenceVC (segue: UIStoryboardSegue){
+//        if segue.identifier == "fromTimerView"{
+//            let TimerVC = segue.destination as! TimerViewController
+//            TimerVC.AgendaTimer.invalidate()
+//            TimerVC.ConferenceTimer.invalidate()
+//        }
+    }
+
 
     /*
     // MARK: - Navigation

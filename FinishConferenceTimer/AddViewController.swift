@@ -12,7 +12,9 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     let minutesList: [Int] = [0,1,5,10,15,20,25,30,35,40,45,50,55]
     let hoursList: [Int] = [0,1,2,3,4,5,6,7,8,9,10,11,12]
-    var selectMinute:Int = 0    //議論時間を格納（秒）
+    var registerSeconds:Int = 0    //登録する議論時間を格納（秒）
+    var selectHour: Int = 0       // PickerViewで選択されている時間を保持（秒）
+    var selectMinute: Int = 0     // PickerViewで選択されている分を保持（秒）
     
     @IBOutlet var nameTextField: UITextField!   //議題入力フィールド
     @IBOutlet var TimePickerView: UIPickerView!
@@ -58,11 +60,11 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     //選択処理
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0{
-            selectMinute += hoursList[row] * 60 * 60
+            selectHour = hoursList[row] * 60 * 60
             hourLabel.text = String(hoursList[row]) + "時間"
         }
         if component == 1{
-            selectMinute += minutesList[row] * 60
+            selectMinute = minutesList[row] * 60
             minuteLabel.text = String(minutesList[row]) + "分"
         }
     }
@@ -80,8 +82,9 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             self.present(alert, animated: true, completion: nil)
         }
         else{   //尽くされていたら登録
+            registerSeconds = selectHour + selectMinute //registerSecondsに選択された時間を格納
             AgendaNameList.append(nameTextField.text!)
-            DiscussTimeList.append(selectMinute)
+            DiscussTimeList.append(registerSeconds)
             
             saveData.set(AgendaNameList, forKey: "AGENDA")
             saveData.set(DiscussTimeList, forKey: "TIME")
@@ -149,6 +152,7 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
 
     /*

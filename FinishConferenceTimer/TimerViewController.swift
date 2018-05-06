@@ -27,7 +27,7 @@ class TimerViewController: UIViewController {
     var ConferenceNamefrom:String = ""  //ConferenceViewから会議名を受け取る変数
     
     //使用するタイマーの宣言
-    var Conferencetimer = Timer()
+    var ConferenceTimer = Timer()
     var AgendaTimer = Timer()
     var RepeatTimer = Timer()
     
@@ -43,9 +43,9 @@ class TimerViewController: UIViewController {
     
     //一時停止or再開ボタンのメソッド
     @IBAction func tappedPauseButton() {
-        if Conferencetimer.isValid || AgendaTimer.isValid {
+        if ConferenceTimer.isValid || AgendaTimer.isValid {
             //停止処理
-            Conferencetimer.invalidate()
+            ConferenceTimer.invalidate()
             AgendaTimer.invalidate()
             PauseButton.setTitle("再開", for: .normal)    //ボタンテキスト変更
             
@@ -64,7 +64,7 @@ class TimerViewController: UIViewController {
     @IBAction func skipButton() {
         currentDiscuss += 1
         if currentDiscuss < DiscussTimeList.count{
-            Conferencetimer.invalidate()
+            ConferenceTimer.invalidate()
             AgendaTimer.invalidate()
             AgendaLeftTime = 0
             ConferenceTimerStart()
@@ -84,7 +84,7 @@ class TimerViewController: UIViewController {
         //終了時刻を計算
         let finishDateC = Date(timeInterval: TimeInterval(CalcTotalTime()), since: startTime as Date)
         //0.01秒ごとにupdatelabel()を呼び出す      //finishDateを引数でupdatelabelに渡したいけど直接じゃ無理ぽいのでuserinfo経由
-        Conferencetimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateClabel), userInfo: finishDateC, repeats: true)
+        ConferenceTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateClabel), userInfo: finishDateC, repeats: true)
     }
     
     //表示を更新させるメソッド
@@ -103,7 +103,7 @@ class TimerViewController: UIViewController {
         if ConferenceLeftTime == 0 {
             let soundIDRing: SystemSoundID = 1005
             AudioServicesPlaySystemSound(soundIDRing)
-            Conferencetimer.invalidate()
+            ConferenceTimer.invalidate()
         }
     }
 
@@ -148,7 +148,7 @@ class TimerViewController: UIViewController {
         AgendaTimerLabel.text = displayString as String
         
         //終了処理
-        if AgendaLeftTime == 0 && currentDiscuss <= AgendaNameList.count - 1{  //最終終了処理
+        if AgendaLeftTime == 0 && currentDiscuss >= AgendaNameList.count - 1{  //最終終了処理
             AgendaTimer.invalidate()
             PauseButton.isEnabled = false
             let soundIDRing: SystemSoundID = 1005
@@ -181,7 +181,11 @@ class TimerViewController: UIViewController {
         ConferenceTimerStart()
         AgendaTimerStart()
     }
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        ConferenceTimer.invalidate()
+        AgendaTimer.invalidate()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
