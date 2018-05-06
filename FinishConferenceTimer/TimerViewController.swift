@@ -153,6 +153,20 @@ class TimerViewController: UIViewController {
             PauseButton.isEnabled = false
             let soundIDRing: SystemSoundID = 1005
             AudioServicesPlaySystemSound(soundIDRing)
+            
+            //アラートを出してタイトル画面へ戻る
+            let alert: UIAlertController = UIAlertController(title: "会議終了", message: "お疲れ様でした！タイトル画面へ戻ります", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: {(action: UIAlertAction!)in
+                //アラートが消えるのと重ならないように0.5秒後に遷移
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                    self.performSegue(withIdentifier: "toTitleView", sender: nil)
+                }
+            }
+            )
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+            
+            
         }
         else if AgendaLeftTime == 0 {    //終了したらcurrentDiscussを更新してstartTimerを起動し直す
             currentDiscuss += 1

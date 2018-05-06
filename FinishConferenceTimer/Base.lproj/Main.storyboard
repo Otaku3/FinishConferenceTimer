@@ -375,6 +375,7 @@
                         <outlet property="NextAgendaNameLabel" destination="Js3-CD-fqt" id="rhp-Wv-APN"/>
                         <outlet property="PauseButton" destination="cyr-Gi-Gr6" id="FlR-Sx-owc"/>
                         <outlet property="SkipButton" destination="dFj-Rl-goy" id="qEa-DI-6D9"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="toTitleView" id="25I-AD-Nbf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CG7-eL-nZB" userLabel="First Responder" sceneMemberID="firstResponder"/>
