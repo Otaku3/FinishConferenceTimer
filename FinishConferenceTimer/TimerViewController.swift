@@ -18,6 +18,7 @@ class TimerViewController: UIViewController {
     @IBOutlet var AgendaTimerLabel: UILabel!        //議題時間タイマーのラベル
     
     @IBOutlet var PauseButton: UIButton!   //一時停止ボタン
+    @IBOutlet var SkipButton: UIButton!    //スキップボタン
     
     let saveData = UserDefaults.standard
     var AgendaNameList: [String] = []   //UserDefaultから読み込む議題名のString型配列
@@ -56,6 +57,21 @@ class TimerViewController: UIViewController {
             AgendaTimerStart()      //再スタート
             PauseButton.setTitle("一時停止", for: .normal)  //ボタンテキスト変更
             
+        }
+    }
+    
+    //次の議題へスキップするメソッド
+    @IBAction func skipButton() {
+        currentDiscuss += 1
+        if currentDiscuss < DiscussTimeList.count{
+            Conferencetimer.invalidate()
+            AgendaTimer.invalidate()
+            AgendaLeftTime = 0
+            ConferenceTimerStart()
+            AgendaTimerStart()
+        }
+        else{
+            SkipButton.isEnabled = false
         }
     }
     
@@ -108,6 +124,7 @@ class TimerViewController: UIViewController {
         CurrentAgendaNameLabel.text = AgendaNameList[currentDiscuss]
         if(currentDiscuss == AgendaNameList.count - 1){
             NextAgendaNameLabel.text = "会議終了です"
+            SkipButton.isEnabled = false
         }else{
             NextAgendaNameLabel.text = AgendaNameList[currentDiscuss + 1]
         }
@@ -131,8 +148,9 @@ class TimerViewController: UIViewController {
         AgendaTimerLabel.text = displayString as String
         
         //終了処理
-        if AgendaLeftTime == 0 && currentDiscuss == AgendaNameList.count - 1{  //最終終了処理
+        if AgendaLeftTime == 0 && currentDiscuss <= AgendaNameList.count - 1{  //最終終了処理
             AgendaTimer.invalidate()
+            PauseButton.isEnabled = false
             let soundIDRing: SystemSoundID = 1005
             AudioServicesPlaySystemSound(soundIDRing)
         }

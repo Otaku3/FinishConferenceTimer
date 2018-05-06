@@ -243,7 +243,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="20D-by-yes" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="912.79999999999995" y="863.1184407796103"/>
+            <point key="canvasLocation" x="151" y="806"/>
         </scene>
         <!--Timer View Controller-->
         <scene sceneID="aT2-X6-O0Q">
@@ -293,6 +293,15 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dFj-Rl-goy">
+                                        <rect key="frame" x="8" y="121" width="152" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.92723041772842407" green="0.90500634908676147" blue="0.036613930016756058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="次の議題へ"/>
+                                        <connections>
+                                            <action selector="skipButton" destination="W5Q-5f-AeL" eventType="touchUpInside" id="45u-1i-Hrd"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.92723041772842407" green="0.90500634908676147" blue="0.036613930016756058" alpha="0.45448951199999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -305,6 +314,11 @@
                                 <connections>
                                     <action selector="tappedPauseButton" destination="W5Q-5f-AeL" eventType="touchUpInside" id="Zjd-s7-JBt"/>
                                 </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNV-ng-cuk">
+                                <rect key="frame" x="24" y="20" width="31" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="戻る"/>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qwn-6A-yZV">
                                 <rect key="frame" x="16" y="236" width="343" height="195"/>
@@ -354,6 +368,7 @@
                         <outlet property="CurrentAgendaNameLabel" destination="6DU-el-3oT" id="RXd-oW-tOr"/>
                         <outlet property="NextAgendaNameLabel" destination="Js3-CD-fqt" id="rhp-Wv-APN"/>
                         <outlet property="PauseButton" destination="cyr-Gi-Gr6" id="FlR-Sx-owc"/>
+                        <outlet property="SkipButton" destination="dFj-Rl-goy" id="qEa-DI-6D9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CG7-eL-nZB" userLabel="First Responder" sceneMemberID="firstResponder"/>
