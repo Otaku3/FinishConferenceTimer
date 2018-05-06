@@ -8,21 +8,29 @@
 
 import UIKit
 
-class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
-    let minutesList: [Int] = [0,5,10,15,20,25,30,35,40,45,50,55]
+    let minutesList: [Int] = [0,1,5,10,15,20,25,30,35,40,45,50,55]
     let hoursList: [Int] = [0,1,2,3,4,5,6,7,8,9,10,11,12]
-    var selectMinute:Int = 0
+    var selectMinute:Int = 0    //議論時間を格納（秒）
     
     @IBOutlet var nameTextField: UITextField!   //議題入力フィールド
     @IBOutlet var TimePickerView: UIPickerView!
     @IBOutlet var hourLabel: UILabel!   //時間表示ラベル
     @IBOutlet var minuteLabel: UILabel! //分表示ラベル
     
-    var AgendaNameList: [String] = []
-    var DiscussTimeList: [Int] = []
+    var AgendaNameList: [String] = []   //UserDefaultから読み込むための配列
+    var DiscussTimeList: [Int] = []     //UserDefaultから読み込むための配列
     
     let saveData = UserDefaults.standard
+    
+    ////////////////////////////////////TextFieldの設定/////////////////////////////////////////////////////
+    // 改行ボタンを押した時の処理
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // キーボードを隠す
+        nameTextField.resignFirstResponder()
+        return true
+    }
     
     ///////////////////////////////////////PickerViewの設定////////////////////////////////////////////////////////
     //列数
@@ -36,6 +44,10 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         }
         return minutesList.count
     }
+    //サイズ
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        return TimePickerView.bounds.width * 1/2
+    }
     //表示内容
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if component == 0 {
@@ -46,24 +58,28 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     //選択処理
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0{
-            selectMinute = hoursList[row] * 60
+            selectMinute += hoursList[row] * 60 * 60
             hourLabel.text = String(hoursList[row]) + "時間"
         }
         if component == 1{
-            selectMinute = minutesList[row]
+            selectMinute += minutesList[row] * 60
             minuteLabel.text = String(minutesList[row]) + "分"
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     @IBAction func SaveData() {
-        //議題名が入力されていない時の警告
-        if nameTextField.text == ""{
+        if nameTextField.text == "" {    //議題名が入力されていない時の警告
             let alert = UIAlertController(title: "議題名", message: "議題を入力してください", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
-        else{
+        else if selectMinute == 0 {     //時間が設定されてない時の警告
+            let alert = UIAlertController(title: "議論時間", message: "時間を設定してください", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else{   //尽くされていたら登録
             AgendaNameList.append(nameTextField.text!)
             DiscussTimeList.append(selectMinute)
             
@@ -73,7 +89,16 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let alert = UIAlertController(title: "保存完了", message: "議題の登録が完了しました", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
+            
+            //画面表示戻す
             nameTextField.text = ""
+            TimePickerView.selectRow(0, inComponent: 0, animated: true)
+            hourLabel.text = String(hoursList[0]) + "時間"
+            TimePickerView.selectRow(0, inComponent: 1, animated: true)
+            minuteLabel.text = String(minutesList[0]) + "分"
+            //selectMinuteをクリア
+            selectMinute = 0
+            
         }
     }
     
@@ -83,6 +108,9 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hourLabel.text = "0時間"
+        minuteLabel.text = "0分"
+        
         //Userdefaultからの読み込み
         if saveData.array(forKey: "AGENDA") != nil{
             AgendaNameList = saveData.array(forKey: "AGENDA") as! [String]
@@ -90,6 +118,31 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         if saveData.array(forKey: "TIME") != nil{
             DiscussTimeList = saveData.array(forKey: "TIME") as! [Int]
         }
+        
+        //TextFiled周り
+        nameTextField.delegate = self
+        //TextFieldを改良
+        nameTextField.textColor = UIColor.black                        //文字色
+        nameTextField.backgroundColor = UIColor(white: 0.9, alpha: 1)   // 背景色
+        nameTextField.placeholder = "議題名"                        //プレースホルダー設定
+        nameTextField.clearButtonMode = .always                    //全消去ボタン設定
+        nameTextField.returnKeyType = .done                        //改行ボタン→完了ボタン
+        
+        //PickerView周り
+        //"時間"の固定ラベル追加
+        let hStr = UILabel()
+        hStr.text = "時間"
+        hStr.sizeToFit()
+        hStr.frame = CGRect(x : TimePickerView.bounds.width/2 - hStr.bounds.width,y : TimePickerView.bounds.height/2 - hStr.bounds.height/2,width : hStr.bounds.width,height: hStr.bounds.height)
+        TimePickerView.addSubview(hStr)
+        //"分"の固定ラベル追加
+        let mStr = UILabel()
+        mStr.text = "分"
+        mStr.sizeToFit()
+        mStr.frame = CGRect(x : TimePickerView.bounds.width - mStr.bounds.width,y : TimePickerView.bounds.height/2 - mStr.bounds.height/2,width : mStr.bounds.width,height: mStr.bounds.height)
+        TimePickerView.addSubview(mStr)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

@@ -14,7 +14,7 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     /////////////////////////////////////変数宣言////////////////////////////////////////////////
     //議題データ
     var AgendaNameList: [String] = []   //議題名のString型配列
-    var DiscussTimeList: [Int] = []     //議論時間のInt型配列
+    var DiscussTimeList: [Int] = []     //議論時間のInt型配列(秒)
     let saveData = UserDefaults.standard
     
     @IBOutlet var ConferenceName: UILabel!  //会議名のラベル
@@ -41,7 +41,7 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         agendaname.text = AgendaNameList[indexPath.row]
         
         let discusstime = cell.viewWithTag(2) as! UILabel
-        discusstime.text = String(DiscussTimeList[indexPath.row])
+        discusstime.text = String(DiscussTimeList[indexPath.row] / 60) + "分"
         
         return cell
     }
@@ -53,8 +53,8 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         for i in DiscussTimeList{
             TotalTime += i
         }
-        let hour: Int = TotalTime / 60
-        let minute: Int = TotalTime - hour * 60
+        let hour: Int = TotalTime / (60 * 60)
+        let minute: Int = (TotalTime - hour * 60 * 60) / 60
         
         return (hour, minute)
     }
@@ -69,6 +69,7 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     
     //スタートボタンタップ時の動作
     @IBAction func tappedStartButton(){
+        //何も登録されてなかったら警告
         if AgendaNameList.count == 0 || DiscussTimeList.count == 0{
             let alert: UIAlertController = UIAlertController(title: "議題", message: "＋ボタンから会議内容を追加してください", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
