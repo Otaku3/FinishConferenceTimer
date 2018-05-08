@@ -47,6 +47,31 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         
         return cell
     }
+    
+    //横スワイプで削除動作
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
+        if editingStyle == .delete{
+            //ローカルデータ削除
+            AgendaNameList.remove(at: indexPath.row)
+            DiscussTimeList.remove(at: indexPath.row)
+            //TableView上から削除
+            AgendaList.deleteRows(at: [indexPath], with: .fade)
+            //Userdefaultの情報を更新
+            //一度全削除
+            if let domain = Bundle.main.bundleIdentifier {
+                saveData.removePersistentDomain(forName: domain)
+            }
+            //再度登録
+            saveData.set(AgendaNameList, forKey: "AGENDA")
+            saveData.set(DiscussTimeList, forKey: "TIME")
+            //合計時間ラベル更新
+            if CalcTotalTime().hour == 0{
+                ConferenceTime.text = "合計" + String(CalcTotalTime().minute) + "分"
+            }else{
+                ConferenceTime.text = "合計" + String(CalcTotalTime().hour) + "時間" + String(CalcTotalTime().minute) + "分"
+            }
+        }
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////
     
     //表示用の合計時間の計算メソッド

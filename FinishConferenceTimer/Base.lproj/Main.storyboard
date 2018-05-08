@@ -318,14 +318,6 @@
                                     <action selector="tappedPauseButton" destination="W5Q-5f-AeL" eventType="touchUpInside" id="Zjd-s7-JBt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNV-ng-cuk">
-                                <rect key="frame" x="24" y="20" width="31" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="戻る"/>
-                                <connections>
-                                    <segue destination="eJe-GF-4zD" kind="unwind" identifier="fromTimerView" unwindAction="backConferenceVCWithSegue:" id="JMo-pZ-pnX"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qwn-6A-yZV">
                                 <rect key="frame" x="16" y="236" width="343" height="195"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -363,6 +355,14 @@
                                 <color key="backgroundColor" red="0.92723041772842407" green="0.90500634908676147" blue="0.036613930016756058" alpha="0.45448951198630139" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNV-ng-cuk">
+                                <rect key="frame" x="16" y="44" width="31" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="戻る"/>
+                                <connections>
+                                    <segue destination="eJe-GF-4zD" kind="unwind" identifier="fromTimerView" unwindAction="backConferenceVCWithSegue:" id="JMo-pZ-pnX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="iXk-is-6Os"/>
