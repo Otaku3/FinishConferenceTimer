@@ -45,11 +45,15 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         let discusstime = cell.viewWithTag(2) as! UILabel
         discusstime.text = String(DiscussTimeList[indexPath.row] / 60) + "分"
         
+        //セルを選択不可にする
+        self.AgendaList.allowsSelection = false
+        
         return cell
     }
     
     //横スワイプで削除動作
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath){
+        
         if editingStyle == .delete{
             //ローカルデータ削除
             AgendaNameList.remove(at: indexPath.row)
@@ -57,11 +61,11 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
             //TableView上から削除
             AgendaList.deleteRows(at: [indexPath], with: .fade)
             //Userdefaultの情報を更新
-            //一度全削除
+                //一度全削除
             if let domain = Bundle.main.bundleIdentifier {
                 saveData.removePersistentDomain(forName: domain)
             }
-            //再度登録
+                //再度登録
             saveData.set(AgendaNameList, forKey: "AGENDA")
             saveData.set(DiscussTimeList, forKey: "TIME")
             //合計時間ラベル更新

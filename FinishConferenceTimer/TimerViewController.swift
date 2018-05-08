@@ -122,10 +122,11 @@ class TimerViewController: UIViewController {
 
         //議題名ラベルをセット
         CurrentAgendaNameLabel.text = AgendaNameList[currentDiscuss]
-        if(currentDiscuss == AgendaNameList.count - 1){
+        
+        if(currentDiscuss == AgendaNameList.count - 1){ //最後の議題だった場合
             NextAgendaNameLabel.text = "会議終了です"
-            SkipButton.isEnabled = false
-        }else{
+            SkipButton.isEnabled = false    //スキップボタン誤動作防止
+        }else{  //途中の議題だった場合
             NextAgendaNameLabel.text = AgendaNameList[currentDiscuss + 1]
         }
         
@@ -156,23 +157,23 @@ class TimerViewController: UIViewController {
             
             //アラートを出してタイトル画面へ戻る
             let alert: UIAlertController = UIAlertController(title: "会議終了", message: "お疲れ様でした！タイトル画面へ戻ります", preferredStyle: .alert)
+            
             let okAction = UIAlertAction(title: "OK", style: .default, handler: {(action: UIAlertAction!)in
-                //アラートが消えるのと重ならないように0.5秒後に遷移
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                    self.performSegue(withIdentifier: "toTitleView", sender: nil)
+                    //アラートが消えるのと重ならないように0.5秒後に遷移
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                        self.performSegue(withIdentifier: "toTitleView", sender: nil)
+                    }
                 }
-            }
             )
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
-            
-            
         }
         else if AgendaLeftTime == 0 {    //終了したらcurrentDiscussを更新してstartTimerを起動し直す
             currentDiscuss += 1
             let soundIDRing: SystemSoundID = 1005
             AudioServicesPlaySystemSound(soundIDRing)
             AgendaTimer.invalidate()
+            //動き続けてる会議タイマーとずれるのを防止するために1秒待たせる
             RepeatTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(AgendaTimerStart), userInfo: nil, repeats: false)
         }
     }
