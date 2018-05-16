@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate {   
 
     @IBOutlet var ConferenceName: UITextField!
     
@@ -24,6 +24,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         ConferenceName.delegate = self
         //TextFieldを改良
+        ConferenceName.frame.size.height = 50    //高さ
+        ConferenceName.font = UIFont.systemFont(ofSize: 36)  //フォント変更
         ConferenceName.textColor = UIColor.black                        //文字色
         ConferenceName.backgroundColor = UIColor(white: 0.9, alpha: 1)   // 背景色
         ConferenceName.placeholder = "○○会議"                        //プレースホルダー設定
@@ -44,6 +46,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //画面外をタッチした時にキーボードをしまう
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.ConferenceName.endEditing(true)
     }
 
     

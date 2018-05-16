@@ -102,7 +102,7 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     @IBAction func tappedStartButton(){
         //何も登録されてなかったら警告
         if AgendaNameList.count == 0 || DiscussTimeList.count == 0{
-            let alert: UIAlertController = UIAlertController(title: "議題", message: "＋ボタンから会議内容を追加してください", preferredStyle: .alert)
+            let alert: UIAlertController = UIAlertController(title: "未登録", message: "＋ボタンから会議内容を追加してください", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }else{
@@ -143,13 +143,10 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     
     //unwind Segue
     @IBAction func backConferenceVC (segue: UIStoryboardSegue){
-//        if segue.identifier == "fromTimerView"{
-//            let TimerVC = segue.destination as! TimerViewController
-//            TimerVC.AgendaTimer.invalidate()
-//            TimerVC.ConferenceTimer.invalidate()
-//        }
     }
-
+    
+    func backConferenceVCfromAlert (segue: UIStoryboardSegue){
+    }
 
     /*
     // MARK: - Navigation

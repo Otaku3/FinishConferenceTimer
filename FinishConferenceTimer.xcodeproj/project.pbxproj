@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		6630D39320946BC80032B2B1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6630D39220946BC80032B2B1 /* AudioToolbox.framework */; };
+		663F1F8D20AC03D300ADFE48 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 663F1F8C20AC03D300ADFE48 /* icon.png */; };
+		663F1F9020AC4E9A00ADFE48 /* LaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 663F1F8F20AC4E9A00ADFE48 /* LaunchScreen.png */; };
 		66ED6C8B208EEA4A0021EF8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6C8A208EEA4A0021EF8C /* AppDelegate.swift */; };
 		66ED6C8D208EEA4A0021EF8C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6C8C208EEA4A0021EF8C /* ViewController.swift */; };
 		66ED6C90208EEA4A0021EF8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ED6C8E208EEA4A0021EF8C /* Main.storyboard */; };
-		66ED6C92208EEA4C0021EF8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66ED6C91208EEA4C0021EF8C /* Assets.xcassets */; };
 		66ED6C95208EEA4C0021EF8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66ED6C93208EEA4C0021EF8C /* LaunchScreen.storyboard */; };
 		66ED6CA0208EEA4C0021EF8C /* FinishConferenceTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6C9F208EEA4C0021EF8C /* FinishConferenceTimerTests.swift */; };
 		66ED6CAB208EEA4C0021EF8C /* FinishConferenceTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ED6CAA208EEA4C0021EF8C /* FinishConferenceTimerUITests.swift */; };
@@ -39,11 +40,12 @@
 
 /* Begin PBXFileReference section */
 		6630D39220946BC80032B2B1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		663F1F8C20AC03D300ADFE48 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		663F1F8F20AC4E9A00ADFE48 /* LaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LaunchScreen.png; path = Assets.xcassets/LaunchScreen.png; sourceTree = "<group>"; };
 		66ED6C87208EEA4A0021EF8C /* FinishConferenceTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinishConferenceTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66ED6C8A208EEA4A0021EF8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66ED6C8C208EEA4A0021EF8C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		66ED6C8F208EEA4A0021EF8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		66ED6C91208EEA4C0021EF8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66ED6C94208EEA4C0021EF8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66ED6C96208EEA4C0021EF8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66ED6C9B208EEA4C0021EF8C /* FinishConferenceTimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinishConferenceTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,7 @@
 		66ED6C7E208EEA4A0021EF8C = {
 			isa = PBXGroup;
 			children = (
+				663F1F8C20AC03D300ADFE48 /* icon.png */,
 				66ED6C89208EEA4A0021EF8C /* FinishConferenceTimer */,
 				66ED6C9E208EEA4C0021EF8C /* FinishConferenceTimerTests */,
 				66ED6CA9208EEA4C0021EF8C /* FinishConferenceTimerUITests */,
@@ -117,11 +120,11 @@
 			children = (
 				66ED6C8A208EEA4A0021EF8C /* AppDelegate.swift */,
 				66ED6C8C208EEA4A0021EF8C /* ViewController.swift */,
+				663F1F8F20AC4E9A00ADFE48 /* LaunchScreen.png */,
 				66ED6CB8208EF2D60021EF8C /* ConferenceViewController.swift */,
 				66ED6CBA208EF2E80021EF8C /* AddViewController.swift */,
 				66ED6CBC208EF2F60021EF8C /* TimerViewController.swift */,
 				66ED6C8E208EEA4A0021EF8C /* Main.storyboard */,
-				66ED6C91208EEA4C0021EF8C /* Assets.xcassets */,
 				66ED6C93208EEA4C0021EF8C /* LaunchScreen.storyboard */,
 				66ED6C96208EEA4C0021EF8C /* Info.plist */,
 			);
@@ -250,8 +253,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				663F1F8D20AC03D300ADFE48 /* icon.png in Resources */,
 				66ED6C95208EEA4C0021EF8C /* LaunchScreen.storyboard in Resources */,
-				66ED6C92208EEA4C0021EF8C /* Assets.xcassets in Resources */,
+				663F1F9020AC4E9A00ADFE48 /* LaunchScreen.png in Resources */,
 				66ED6C90208EEA4A0021EF8C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

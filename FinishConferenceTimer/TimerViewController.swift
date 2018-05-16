@@ -51,27 +51,43 @@ class TimerViewController: UIViewController {
             
         }
         else{
+            if currentDiscuss > DiscussTimeList.count{
+                currentDiscuss = DiscussTimeList.count - 1
+            }
             //再開処理
             DiscussTimeList[currentDiscuss] = AgendaLeftTime    //現在の議題の残り時間を更新
             ConferenceTimerStart()  //再スタート
             AgendaTimerStart()      //再スタート
-            PauseButton.setTitle("一時停止", for: .normal)  //ボタンテキスト変更
+            PauseButton.setTitle("休憩", for: .normal)  //ボタンテキスト変更
             
         }
     }
     
     //次の議題へスキップするメソッド
     @IBAction func skipButton() {
-        currentDiscuss += 1
-        if currentDiscuss < DiscussTimeList.count{
+        if currentDiscuss == DiscussTimeList.count - 1{    //最後の議題の場合：終了処理
+            //アラートを出してタイトル画面へ戻る
+            let alert: UIAlertController = UIAlertController(title: "終了しますか？", message: "タイトル画面へ戻ります", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "はい", style: .default, handler: {(action: UIAlertAction!)in
+                //アラートが消えるのと重ならないように0.5秒後に遷移
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                    self.performSegue(withIdentifier: "toTitleView", sender: nil)
+                }
+            }
+            )
+            let cancelAction: UIAlertAction = UIAlertAction(title: "いいえ", style: .cancel, handler: nil)
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+        else if currentDiscuss < DiscussTimeList.count - 1{  //スキップ処理
+            currentDiscuss += 1
             ConferenceTimer.invalidate()
             AgendaTimer.invalidate()
             AgendaLeftTime = 0
             ConferenceTimerStart()
             AgendaTimerStart()
-        }
-        else{
-            SkipButton.isEnabled = false
         }
     }
     
@@ -95,8 +111,9 @@ class TimerViewController: UIViewController {
         //表示形式に加工
         let minSec = 60
         let leftMin = ConferenceLeftTime / minSec
-        let leftSec = ConferenceLeftTime - leftMin * minSec
-        let displayString = NSString(format: "%02d:%02d", leftMin, leftSec)
+//        let leftSec = ConferenceLeftTime - leftMin * minSec
+//        let displayString = NSString(format: "%02d:%02d", leftMin, leftSec)
+        let displayString = String(leftMin) + "分"
         ConferenceTimerLabel.text = displayString as String
         
         //終了処理
@@ -125,7 +142,7 @@ class TimerViewController: UIViewController {
         
         if(currentDiscuss == AgendaNameList.count - 1){ //最後の議題だった場合
             NextAgendaNameLabel.text = "会議終了です"
-            SkipButton.isEnabled = false    //スキップボタン誤動作防止
+            SkipButton.setTitle("終了", for: .normal) //スキップボタンを終了ボタンに
         }else{  //途中の議題だった場合
             NextAgendaNameLabel.text = AgendaNameList[currentDiscuss + 1]
         }

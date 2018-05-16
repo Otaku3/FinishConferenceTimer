@@ -18,6 +18,7 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     @IBOutlet var nameTextField: UITextField!   //議題入力フィールド
     @IBOutlet var TimePickerView: UIPickerView!
+    @IBOutlet var agendaName: UILabel!  //議題表示ラベル
     @IBOutlet var hourLabel: UILabel!   //時間表示ラベル
     @IBOutlet var minuteLabel: UILabel! //分表示ラベル
     
@@ -29,6 +30,8 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     ////////////////////////////////////TextFieldの設定/////////////////////////////////////////////////////
     // 改行ボタンを押した時の処理
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        agendaName?.text = nameTextField.text
+        
         // キーボードを隠す
         nameTextField.resignFirstResponder()
         return true
@@ -71,27 +74,36 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     @IBAction func SaveData() {
+        registerSeconds = selectHour + selectMinute //registerSecondsに選択された時間を格納
+        
         if nameTextField.text == "" {    //議題名が入力されていない時の警告
             let alert = UIAlertController(title: "議題名", message: "議題を入力してください", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
-        else if selectMinute == 0 {     //時間が設定されてない時の警告
+        else if registerSeconds == 0 {     //時間が設定されてない時の警告
             let alert = UIAlertController(title: "議論時間", message: "時間を設定してください", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
         else{   //尽くされていたら登録
-            registerSeconds = selectHour + selectMinute //registerSecondsに選択された時間を格納
             AgendaNameList.append(nameTextField.text!)
             DiscussTimeList.append(registerSeconds)
             
             saveData.set(AgendaNameList, forKey: "AGENDA")
             saveData.set(DiscussTimeList, forKey: "TIME")
             
-            let alert = UIAlertController(title: "保存完了", message: "議題の登録が完了しました", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            //登録を続けるか確認（続けなければ戻る）
+            let alert = UIAlertController(title: "保存完了", message: "登録を続けますか？", preferredStyle: .alert)
+            let okAction: UIAlertAction = UIAlertAction(title: "はい", style: .cancel, handler: nil)
+            let canselAction: UIAlertAction = UIAlertAction(title: "いいえ", style: .default, handler: {
+                (action: UIAlertAction!) -> Void in
+                self.performSegue(withIdentifier: "fromAddView", sender: self)
+            })
+            alert.addAction(okAction)
+            alert.addAction(canselAction)
             self.present(alert, animated: true, completion: nil)
+            
             
             //画面表示戻す
             nameTextField.text = ""
@@ -99,13 +111,16 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             hourLabel.text = String(hoursList[0]) + "時間"
             TimePickerView.selectRow(0, inComponent: 1, animated: true)
             minuteLabel.text = String(minutesList[0]) + "分"
-            //selectMinuteをクリア
+            agendaName.text = ""
+            //変数をクリア
+            registerSeconds = 0
             selectMinute = 0
+            selectHour = 0
             
         }
     }
     
-    @IBAction func back (segue: UIStoryboardSegue){
+    func back (segue: UIStoryboardSegue){
     }
     
     override func viewDidLoad() {
@@ -125,6 +140,8 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         //TextFiled周り
         nameTextField.delegate = self
         //TextFieldを改良
+        nameTextField.frame.size.height = 50    //高さ
+        nameTextField.font = UIFont.systemFont(ofSize: 36)  //フォント変更
         nameTextField.textColor = UIColor.black                        //文字色
         nameTextField.backgroundColor = UIColor(white: 0.9, alpha: 1)   // 背景色
         nameTextField.placeholder = "議題名"                        //プレースホルダー設定
@@ -134,12 +151,14 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         //PickerView周り
         //"時間"の固定ラベル追加
         let hStr = UILabel()
+        hStr.font = UIFont(name: "Hiragino Maru Gothic ProN W4", size: hStr.font.pointSize) //フォント変更
         hStr.text = "時間"
         hStr.sizeToFit()
         hStr.frame = CGRect(x : TimePickerView.bounds.width/2 - hStr.bounds.width,y : TimePickerView.bounds.height/2 - hStr.bounds.height/2,width : hStr.bounds.width,height: hStr.bounds.height)
         TimePickerView.addSubview(hStr)
         //"分"の固定ラベル追加
         let mStr = UILabel()
+        mStr.font = UIFont(name: "Hiragino Maru Gothic ProN W4", size: mStr.font.pointSize) //フォント変更
         mStr.text = "分"
         mStr.sizeToFit()
         mStr.frame = CGRect(x : TimePickerView.bounds.width - mStr.bounds.width,y : TimePickerView.bounds.height/2 - mStr.bounds.height/2,width : mStr.bounds.width,height: mStr.bounds.height)
@@ -152,6 +171,12 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //画面外をタッチした時にキーボードをしまう
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.nameTextField.endEditing(true)
+    }
+
     
     
 
