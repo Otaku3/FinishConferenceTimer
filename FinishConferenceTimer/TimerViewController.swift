@@ -72,12 +72,12 @@ class TimerViewController: UIViewController {
     @IBAction func skipButton() {
         if currentDiscuss == DiscussTimeList.count - 1{    //最後の議題の場合：終了処理
             //アラートを出してタイトル画面へ戻る
-            let alert: UIAlertController = UIAlertController(title: "終了しますか？", message: "タイトル画面へ戻ります", preferredStyle: .alert)
+            let alert: UIAlertController = UIAlertController(title: "終了しますか？", message: "準備画面へ戻ります", preferredStyle: .alert)
             
             let okAction = UIAlertAction(title: "はい", style: .default, handler: {(action: UIAlertAction!)in
                 //アラートが消えるのと重ならないように0.5秒後に遷移
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                    self.performSegue(withIdentifier: "toTitleView", sender: nil)
+                    self.performSegue(withIdentifier: "fromTimerView", sender: nil)
                 }
             }
             )
@@ -189,12 +189,12 @@ class TimerViewController: UIViewController {
             AudioServicesPlaySystemSound(soundIDRing)
             
             //アラートを出してタイトル画面へ戻る
-            let alert: UIAlertController = UIAlertController(title: "会議終了", message: "お疲れ様でした！タイトル画面へ戻ります", preferredStyle: .alert)
+            let alert: UIAlertController = UIAlertController(title: "会議終了", message: "お疲れ様でした！", preferredStyle: .alert)
             
             let okAction = UIAlertAction(title: "OK", style: .default, handler: {(action: UIAlertAction!)in
                     //アラートが消えるのと重ならないように0.5秒後に遷移
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-                        self.performSegue(withIdentifier: "toTitleView", sender: nil)
+                        self.performSegue(withIdentifier: "fromTimerView", sender: nil)
                     }
                 }
             )
@@ -244,6 +244,7 @@ class TimerViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        //どっか行くときはタイマー無効に
         ConferenceTimer.invalidate()
         AgendaTimer.invalidate()
     }

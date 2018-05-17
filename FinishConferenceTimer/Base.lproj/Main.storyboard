@@ -322,8 +322,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LDi-Hb-ZhC">
-                                <rect key="frame" x="207" y="502" width="168" height="165"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LDi-Hb-ZhC">
+                                <rect key="frame" x="207" y="502" width="217" height="206"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="次の議題は" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0k-a3-8sc">
@@ -355,9 +355,14 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.45882352941176469" green="0.69803921568627447" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cyr-Gi-Gr6">
-                                <rect key="frame" x="16" y="537" width="100" height="100"/>
+                                <rect key="frame" x="26" y="527" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.3411764705882353" green="0.63137254901960782" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="HiraMaruProN-W4" family="Hiragino Maru Gothic ProN" pointSize="20"/>
@@ -365,7 +370,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBouds" value="YES"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="50"/>
                                     </userDefinedRuntimeAttribute>
@@ -424,7 +428,7 @@
                                         <barButtonItem key="leftBarButtonItem" systemItem="rewind" id="yCv-yo-oGb">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <connections>
-                                                <segue destination="eJe-GF-4zD" kind="unwind" unwindAction="backConferenceVCWithSegue:" id="C5H-Nv-K9X"/>
+                                                <segue destination="eJe-GF-4zD" kind="unwind" identifier="fromTimerView" unwindAction="backConferenceVCWithSegue:" id="C5H-Nv-K9X"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
