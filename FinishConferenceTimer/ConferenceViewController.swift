@@ -43,7 +43,13 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         agendaname.text = AgendaNameList[indexPath.row]
         
         let discusstime = cell.viewWithTag(2) as! UILabel
-        discusstime.text = String(DiscussTimeList[indexPath.row] / 60) + "分"
+        let setHour = DiscussTimeList[indexPath.row] / (60 * 60)
+        let setMin = (DiscussTimeList[indexPath.row] - setHour * 60 * 60) / 60
+        if setHour == 0{
+            discusstime.text = String(setMin) +  " 分"
+        }else{
+            discusstime.text = String(setHour) + " 時間 " + String(setMin) +  " 分"
+        }
         
         //セルを選択不可にする
         self.AgendaList.allowsSelection = false
@@ -70,9 +76,9 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
             saveData.set(DiscussTimeList, forKey: "TIME")
             //合計時間ラベル更新
             if CalcTotalTime().hour == 0{
-                ConferenceTime.text = "合計" + String(CalcTotalTime().minute) + "分"
+                ConferenceTime.text = "合計  " + String(CalcTotalTime().minute) + " 分"
             }else{
-                ConferenceTime.text = "合計" + String(CalcTotalTime().hour) + "時間" + String(CalcTotalTime().minute) + "分"
+                ConferenceTime.text = "合計  " + String(CalcTotalTime().hour) + " 時間 " + String(CalcTotalTime().minute) + " 分"
             }
         }
     }
@@ -127,9 +133,9 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
         }
         //合計時間をラベルに表示
         if CalcTotalTime().hour == 0{
-            ConferenceTime.text = "合計" + String(CalcTotalTime().minute) + "分"
+            ConferenceTime.text = "合計　" + String(CalcTotalTime().minute) + " 分"
         }else{
-            ConferenceTime.text = "合計" + String(CalcTotalTime().hour) + "時間" + String(CalcTotalTime().minute) + "分"
+            ConferenceTime.text = "合計　" + String(CalcTotalTime().hour) + " 時間 " + String(CalcTotalTime().minute) + " 分"
         }
         //TableViewをリロード
         AgendaList.reloadData()

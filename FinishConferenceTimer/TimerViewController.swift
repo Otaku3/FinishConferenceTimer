@@ -26,6 +26,8 @@ class TimerViewController: UIViewController {
 
     var ConferenceNamefrom:String = ""  //ConferenceViewから会議名を受け取る変数
     
+    @IBOutlet var AgendaProgressBar: UIProgressView!
+    
     //使用するタイマーの宣言
     var ConferenceTimer = Timer()
     var AgendaTimer = Timer()
@@ -51,10 +53,13 @@ class TimerViewController: UIViewController {
             
         }
         else{
+            //再開処理
+            
+            //currentDiscussの行き過ぎ防止
             if currentDiscuss > DiscussTimeList.count{
                 currentDiscuss = DiscussTimeList.count - 1
             }
-            //再開処理
+            PastTime +=  (DiscussTimeList[currentDiscuss] -  AgendaLeftTime)   //今までの経過時間を記録
             DiscussTimeList[currentDiscuss] = AgendaLeftTime    //現在の議題の残り時間を更新
             ConferenceTimerStart()  //再スタート
             AgendaTimerStart()      //再スタート
@@ -76,7 +81,7 @@ class TimerViewController: UIViewController {
                 }
             }
             )
-            let cancelAction: UIAlertAction = UIAlertAction(title: "いいえ", style: .cancel, handler: nil)
+            let cancelAction: UIAlertAction = UIAlertAction(title: "いいえ", style: .destructive, handler: nil)
             alert.addAction(okAction)
             alert.addAction(cancelAction)
             self.present(alert, animated: true, completion: nil)
@@ -88,6 +93,7 @@ class TimerViewController: UIViewController {
             AgendaLeftTime = 0
             ConferenceTimerStart()
             AgendaTimerStart()
+            PauseButton.setTitle("休憩", for: .normal)
         }
     }
     
@@ -109,11 +115,11 @@ class TimerViewController: UIViewController {
         //残り時間を終了時刻ー現在時刻で取得(秒)
         let ConferenceLeftTime = Int(FinishDate.timeIntervalSinceNow)
         //表示形式に加工
-        let minSec = 60
-        let leftMin = ConferenceLeftTime / minSec
+        let leftHour = ConferenceLeftTime / (60 * 60)
+        let leftMin = (ConferenceLeftTime - leftHour * 60 * 60) / 60
 //        let leftSec = ConferenceLeftTime - leftMin * minSec
 //        let displayString = NSString(format: "%02d:%02d", leftMin, leftSec)
-        let displayString = String(leftMin) + "分"
+        let displayString = String(leftHour) + " 時間 " + String(leftMin) + " 分"
         ConferenceTimerLabel.text = displayString as String
         
         //終了処理
@@ -128,6 +134,9 @@ class TimerViewController: UIViewController {
     //////////////////////////////////////////議題時間タイマー//////////////////////////////////////////////
     var AgendaLeftTime :Int = 0 //残り秒数
     var currentDiscuss :Int = 0 //現在の議題を取り出すための変数
+    var PastTime :Int = 0   //経過時間記録(progress bar用，一時停止した際に分母を一定にするため利用する)
+    var ProgressLeft :Float = 1.0 // progress bar用，分子を独立して記録させる
+    var ProgressStandard :Int = 0 // progress bar用，分母
     
     //タイマーをスタートさせるメソッド
     @objc func AgendaTimerStart() {
@@ -136,10 +145,11 @@ class TimerViewController: UIViewController {
         let startTime = Date()
         //終了時刻を計算
         let finishDateA: Date = Date(timeInterval: TimeInterval(DiscussTimeList[currentDiscuss]), since: startTime as Date)
-
+        
         //議題名ラベルをセット
         CurrentAgendaNameLabel.text = AgendaNameList[currentDiscuss]
         
+        //次の議題ラベルをセット
         if(currentDiscuss == AgendaNameList.count - 1){ //最後の議題だった場合
             NextAgendaNameLabel.text = "会議終了です"
             SkipButton.setTitle("終了", for: .normal) //スキップボタンを終了ボタンに
@@ -157,16 +167,22 @@ class TimerViewController: UIViewController {
         
         let FinishDate: Date = finishDateA.userInfo as! Date
         //残り時間を終了時刻ー現在時刻で取得(秒)
-        self.AgendaLeftTime = Int(FinishDate.timeIntervalSinceNow)
+        AgendaLeftTime = Int(FinishDate.timeIntervalSinceNow)
         //leftTimeを表示形式に加工
-        let minSec = 60
-        let leftMin = AgendaLeftTime / minSec
-        let leftSec = AgendaLeftTime - leftMin * minSec
-        let displayString = NSString(format: "%02d:%02d", leftMin, leftSec)
+        let leftHour = AgendaLeftTime / (60 * 60)
+        let leftMin = (AgendaLeftTime - leftHour * 60 * 60) / 60
+        let leftSec = AgendaLeftTime - leftHour * 60 * 60 - leftMin * 60
+        let displayString = NSString(format: "%02d:%02d:%02d", leftHour, leftMin, leftSec)
         AgendaTimerLabel.text = displayString as String
         
+        //progress barの更新
+        ProgressStandard = DiscussTimeList[currentDiscuss] + PastTime    //分母
+        ProgressLeft += 0.01    //分子
+        AgendaProgressBar.setProgress( ProgressLeft / Float(ProgressStandard), animated: false)
+        
         //終了処理
-        if AgendaLeftTime == 0 && currentDiscuss >= AgendaNameList.count - 1{  //最終終了処理
+            //最終終了処理
+        if AgendaLeftTime == 0 && currentDiscuss >= AgendaNameList.count - 1{
             AgendaTimer.invalidate()
             PauseButton.isEnabled = false
             let soundIDRing: SystemSoundID = 1005
@@ -185,12 +201,22 @@ class TimerViewController: UIViewController {
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
         }
-        else if AgendaLeftTime == 0 {    //終了したらcurrentDiscussを更新してstartTimerを起動し直す
+            //次の議題へ行く場合の処理　//終了したらcurrentDiscussを更新してstartTimerを起動し直す
+        else if AgendaLeftTime == 0 {
             currentDiscuss += 1
+            
+            // progress bar用の変数はリセット
+            PastTime = 0
+            ProgressLeft = 1.0
+            ProgressStandard  = 0
+            
+            //通知音
             let soundIDRing: SystemSoundID = 1005
             AudioServicesPlaySystemSound(soundIDRing)
+            
+            //タイマー停止
             AgendaTimer.invalidate()
-            //動き続けてる会議タイマーとずれるのを防止するために1秒待たせる
+            //リスタート．動き続けてる会議タイマーとずれるのを防止するために1秒待たせる
             RepeatTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(AgendaTimerStart), userInfo: nil, repeats: false)
         }
     }
@@ -199,6 +225,9 @@ class TimerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //progress barを太く
+        AgendaProgressBar.transform = CGAffineTransform(scaleX: 1.0, y: 10)
         
         //Userdefaultからの読み込み
         if saveData.array(forKey: "AGENDA") != nil{

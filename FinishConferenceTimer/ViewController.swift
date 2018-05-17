@@ -28,7 +28,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         ConferenceName.font = UIFont.systemFont(ofSize: 36)  //フォント変更
         ConferenceName.textColor = UIColor.black                        //文字色
         ConferenceName.backgroundColor = UIColor(white: 0.9, alpha: 1)   // 背景色
-        ConferenceName.placeholder = "○○会議"                        //プレースホルダー設定
+        ConferenceName.placeholder = "会議名"                        //プレースホルダー設定
         ConferenceName.clearButtonMode = .always                    //全消去ボタン設定
         ConferenceName.returnKeyType = .done                        //改行ボタン→完了ボタン
         

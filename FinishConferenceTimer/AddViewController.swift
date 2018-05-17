@@ -18,7 +18,7 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     @IBOutlet var nameTextField: UITextField!   //議題入力フィールド
     @IBOutlet var TimePickerView: UIPickerView!
-    @IBOutlet var agendaName: UILabel!  //議題表示ラベル
+//    @IBOutlet var agendaName: UILabel!  //議題表示ラベル
     @IBOutlet var hourLabel: UILabel!   //時間表示ラベル
     @IBOutlet var minuteLabel: UILabel! //分表示ラベル
     
@@ -30,7 +30,7 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     ////////////////////////////////////TextFieldの設定/////////////////////////////////////////////////////
     // 改行ボタンを押した時の処理
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        agendaName?.text = nameTextField.text
+//        agendaName?.text = nameTextField.text
         
         // キーボードを隠す
         nameTextField.resignFirstResponder()
@@ -64,11 +64,11 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0{
             selectHour = hoursList[row] * 60 * 60
-            hourLabel.text = String(hoursList[row]) + "時間"
+            hourLabel.text = String(hoursList[row]) + " 時間"
         }
         if component == 1{
             selectMinute = minutesList[row] * 60
-            minuteLabel.text = String(minutesList[row]) + "分"
+            minuteLabel.text = String(minutesList[row]) + " 分"
         }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             saveData.set(DiscussTimeList, forKey: "TIME")
             
             //登録を続けるか確認（続けなければ戻る）
-            let alert = UIAlertController(title: "保存完了", message: "登録を続けますか？", preferredStyle: .alert)
+            let alert = UIAlertController(title: "保存完了", message: "続けて登録しますか？", preferredStyle: .alert)
             let okAction: UIAlertAction = UIAlertAction(title: "はい", style: .cancel, handler: nil)
             let canselAction: UIAlertAction = UIAlertAction(title: "いいえ", style: .default, handler: {
                 (action: UIAlertAction!) -> Void in
@@ -108,10 +108,10 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             //画面表示戻す
             nameTextField.text = ""
             TimePickerView.selectRow(0, inComponent: 0, animated: true)
-            hourLabel.text = String(hoursList[0]) + "時間"
+            hourLabel.text = String(hoursList[0]) + " 時間"
             TimePickerView.selectRow(0, inComponent: 1, animated: true)
-            minuteLabel.text = String(minutesList[0]) + "分"
-            agendaName.text = ""
+            minuteLabel.text = String(minutesList[0]) + " 分"
+//            agendaName.text = ""
             //変数をクリア
             registerSeconds = 0
             selectMinute = 0
@@ -126,8 +126,8 @@ class AddViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hourLabel.text = "0時間"
-        minuteLabel.text = "0分"
+        hourLabel.text = "0 時間"
+        minuteLabel.text = "0 分"
         
         //Userdefaultからの読み込み
         if saveData.array(forKey: "AGENDA") != nil{

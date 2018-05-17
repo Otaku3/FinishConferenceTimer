@@ -23,8 +23,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.69803921568627447" green="0.84313725490196079" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="LeadersOriginalAppicon.png" translatesAutoresizingMaskIntoConstraints="NO" id="jzT-fR-tte">
-                                <rect key="frame" x="29" y="177" width="317" height="312"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="LaunchScreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="mPJ-uL-jq8">
+                                <rect key="frame" x="67" y="121" width="240" height="170"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LeadersOriginalAppicon.png" width="2133" height="2130"/>
+        <image name="LaunchScreen.png" width="2133" height="2130"/>
     </resources>
 </document>
