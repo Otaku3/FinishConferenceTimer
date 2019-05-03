@@ -91,6 +91,10 @@ class TimerViewController: UIViewController {
             ConferenceTimer.invalidate()
             AgendaTimer.invalidate()
             AgendaLeftTime = 0
+            // progress bar用の変数リセット
+            PastTime = 0
+            ProgressLeft = 1.0
+            ProgressStandard  = 0
             ConferenceTimerStart()
             AgendaTimerStart()
             PauseButton.setTitle("休憩", for: .normal)
@@ -211,7 +215,7 @@ class TimerViewController: UIViewController {
             ProgressStandard  = 0
             
             //通知音
-            let soundIDRing: SystemSoundID = 1005
+            let soundIDRing: SystemSoundID = 1013
             AudioServicesPlaySystemSound(soundIDRing)
             
             //タイマー停止
@@ -238,7 +242,7 @@ class TimerViewController: UIViewController {
         }
         
         ConferenceNameLabel.text = ConferenceNamefrom   //ConferenceViewから受け取った会議名をラベルに代入
-        PauseButton.setTitle("一時停止", for: .normal)    //一時停止ボタンにテキストセット
+        PauseButton.setTitle("休憩", for: .normal)    //一時停止ボタンにテキストセット
         ConferenceTimerStart()
         AgendaTimerStart()
     }

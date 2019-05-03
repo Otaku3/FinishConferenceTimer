@@ -31,6 +31,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         ConferenceName.placeholder = "会議名"                        //プレースホルダー設定
         ConferenceName.clearButtonMode = .always                    //全消去ボタン設定
         ConferenceName.returnKeyType = .done                        //改行ボタン→完了ボタン
+        ConferenceName.attributedPlaceholder = NSAttributedString(string: "hogehoge", attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
         
     }
     

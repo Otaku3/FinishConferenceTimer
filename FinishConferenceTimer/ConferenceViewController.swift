@@ -153,6 +153,8 @@ class ConferenceViewController: UIViewController, UITableViewDataSource, UITable
     
     func backConferenceVCfromAlert (segue: UIStoryboardSegue){
     }
+    
+    
 
     /*
     // MARK: - Navigation
